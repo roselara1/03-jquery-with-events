@@ -15,7 +15,9 @@ articleView.populateFilters = function () {
 
       // TODO: Refactor this concatenation using a template literal. DONE
       // optionTag = '<option value="' + authorName + '">' + authorName + '</option>';
-      optionTag = `<option value=${authorName}> ${authorName} </option>`;
+      optionTag = `<option value= ${authorName}> ${authorName} </option>`;
+
+
 
 
       if ($('#author-filter option[value="' + authorName + '"]').length === 0) {
@@ -29,6 +31,8 @@ articleView.populateFilters = function () {
       // TODO: Refactor this concatenation using a template literal. DONE
       // optionTag = '<option value="' + category + '">' + category + '</option>';
       optionTag = `<option value= ${category}> ${category} </option>`;
+
+
 
       if ($('#category-filter option[value="' + category + '"]').length === 0) {
         $('#category-filter').append(optionTag);
@@ -66,23 +70,28 @@ articleView.handleMainNav = function () {
   // So: You need to dynamically build a selector string with the correct ID, based on the data available to you on the .tab element that was clicked.
   // REVIEW: Now trigger a click on the first .tab element, to set up the page.
 
-  $('nav .about').click(function () {
-    $('.articles').hide();
-    $('.about').fadeIn(900);
+  $('nav').on('click', 'a', function () {
+    let $tabNav = $(this).data('tab')
+    console.log(this);
+    $('.tab-content').hide();
+    $('#about').fadeIn(1000);
+
+    $('nav .tab:first').click();
   })
-    $('nav articles').click(function () {
-      $('.about').hide();
-      $('.articles').fadeIn(900);
-      
-      
-      // $(this).toggleClass('active');
-    // $('nav .tab:first').click();
-} )
 };
+
+
 
 articleView.setTeasers = function () {
   // REVIEW: Hide elements beyond the first 2 in any article body.
-  $('.article-body *:nth-of-type(n+.2)').hide();
+  $('.article-body *:nth-of-type(n+2)').hide();
+  $('article').on('click', '.read-on', function (event) {
+    event.preventDefault();
+    $('.article-body *:nth-of-type(n+2)').fadeToggle(300);
+
+
+
+  })
 
   // TODO: Add an event handler to reveal all the hidden elements, when the .read-on link is clicked. You can go ahead and hide the "Read On" link once it has been clicked. Be sure to prevent the default link-click action! DONE
   // Ideally, we'd attach this as just one event handler on the #articles section, and let it process (in other words... delegate) any .read-on clicks that happen within child nodes.
@@ -90,8 +99,9 @@ articleView.setTeasers = function () {
 
 // TODO: Call all of the above functions, once we are sure the DOM is ready.
 $(document).ready(function () {
-  articleView.setTeasers();
+  articleView.populateFilters();
   articleView.handleMainNav();
+  articleView.setTeasers();
 })
 
 $('#about').hide();
