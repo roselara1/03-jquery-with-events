@@ -81,9 +81,9 @@ articleView.handleMainNav = function () {
   })
   $('nav .tab:first').click();
 };
-$('nav').on('click','a[class="icon-home"]', function () {
+$('nav').on('click', 'a[class="icon-home"]', function () {
   $('#about').hide();
-  $('.tab-content').fadeIn(1000);
+  $('#articles').fadeIn(1000);
 
 })
 
