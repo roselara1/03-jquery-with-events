@@ -48,6 +48,8 @@ articleView.handleAuthorFilter = function () {
       // TODO: If the <select> menu was changed to an option that has a value, we first need to hide all the articles, and then show just the ones that match for the author that was selected.
       // Use an "attribute selector" to find those articles, and fade them in for the reader.
 
+
+
     } else {
       // TODO: If the <select> menu was changed to an option that is blank, we should first show all the articles, except the one article we are using as a template.
 
@@ -70,17 +72,22 @@ articleView.handleMainNav = function () {
   // So: You need to dynamically build a selector string with the correct ID, based on the data available to you on the .tab element that was clicked.
   // REVIEW: Now trigger a click on the first .tab element, to set up the page.
 
-  $('nav').on('click', 'a', function () {
-    let $tabNav = $(this).data('tab')
+  $('nav').on('click', 'a[class="icon-address-book"]', function () {
+    let $tabNav = $(this).data('tab');
     console.log(this);
     $('.tab-content').hide();
     $('#about').fadeIn(1000);
 
-    $('nav .tab:first').click();
   })
+  $('nav .tab:first').click();
 };
+$('nav').on('click','a[class="icon-home"]', function () {
+  $('#about').hide();
+  $('.tab-content').fadeIn(1000);
 
+})
 
+$('#about').hide();
 
 articleView.setTeasers = function () {
   // REVIEW: Hide elements beyond the first 2 in any article body.
@@ -101,7 +108,8 @@ articleView.setTeasers = function () {
 $(document).ready(function () {
   articleView.populateFilters();
   articleView.handleMainNav();
+  articleView.handleAuthorFilter();
+  articleView.handleCategoryFilter();
   articleView.setTeasers();
 })
 
-$('#about').hide();
